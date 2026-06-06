@@ -18,7 +18,7 @@ const Map = dynamic(() => import("./map"), {
   ),
 });
 
-const API_BASE = "http://127.0.0.1:8000/api/v1";
+const API_BASE = "http://10.19.3.118:8000/api/v1";
 
 export function Dashboard() {
   const { user } = useAuth();
