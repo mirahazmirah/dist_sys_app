@@ -6,7 +6,7 @@ import os
 HOST = "localhost"
 PORT = "5432"
 USER = "postgres"
-PASSWORD = "123"
+PASSWORD = "Azmirahsulimin"
 DATABASE = "campus"
 
 # Note the change to +asyncpg
