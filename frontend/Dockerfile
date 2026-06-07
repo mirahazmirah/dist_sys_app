@@ -27,4 +27,5 @@ COPY --from=builder /app/.env.local ./.env.local
 
 EXPOSE 3000
 
-CMD ["npm", "start"]
+# Gunakan $PORT seperti yang diwarisi daripada Railway
+CMD ["sh", "-c", "npm start -- --port ${PORT:-3000}"]
