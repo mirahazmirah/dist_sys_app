@@ -25,9 +25,11 @@ app.add_middleware(LoggingMiddleware)
 app.add_middleware(SecurityMiddleware)
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["https://frontend-production-50e0.up.railway.app",  # Adjusted for development
-    		"http://localhost:3000",                            # Local Development (Next.js) [cite: 43]
-       		 "http://127.0.0.1:3000",],
+    allow_origins=[
+    "https://frontend-production-50e0.up.railway.app",  # Production Railway
+    "http://localhost:3000",                            # Local Development (Next.js)
+    "http://127.0.0.1:3000",                            # Local Alternative
+],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
