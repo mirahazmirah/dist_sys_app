@@ -1,13 +1,9 @@
 config:
-  target: "http://127.0.0.1:8000"
+  target: "https://backend-production-69b89.up.railway.app"
   phases:
-    - duration: 60
-      arrivalRate: 10
-      name: "Warm up"
-    - duration: 120
+    - duration: 180
       arrivalRate: 50
-      name: "Peak load"
-
+      name: "Sustained load"
 scenarios:
   - name: "Get students"
     flow:
