@@ -453,11 +453,9 @@ kubectl rollout restart deployment/backend-deployment
 
 | Name | Student ID | Parts Handled | Responsibilities |
 |------|-----------|---------------|-----------------|
-| Putri | [ID] | Part 1, 2, 8 | Project setup, FastAPI backend development, database schema, Supabase integration, troubleshooting documentation |
-| Afrina | [ID] | Part 3, 4, 5 | Next.js frontend development, Docker Compose configuration, Kubernetes manifests, Minikube deployment, HPA configuration |
-| Azmirah | [ID] | Part 6, 7 | Wireshark network captures, traffic analysis, Artillery load testing, performance analysis, report generation |
-
-> ✏️ *Update Student IDs before submission.*
+| Putri | [304463] | Part 1, 2, 8 | Project setup, FastAPI backend development, database schema, Supabase integration, troubleshooting documentation |
+| Afrina | [304317] | Part 3, 4, 5 | Next.js frontend development, Docker Compose configuration, Kubernetes manifests, Minikube deployment, HPA configuration |
+| Azmirah | [304008] | Part 6, 7 | Wireshark network captures, traffic analysis, Artillery load testing, performance analysis, report generation |
 
 ---
 
