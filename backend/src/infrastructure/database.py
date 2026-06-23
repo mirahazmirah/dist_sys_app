@@ -1,5 +1,6 @@
 from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession, async_sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.pool import NullPool
 import os
 
 # Connection string using asyncpg driver
@@ -15,11 +16,13 @@ SQLALCHEMY_DATABASE_URL = os.getenv(
     f"postgresql+asyncpg://{USER}:{PASSWORD}@{HOST}:{PORT}/{DATABASE}"
 )
 
-# Create Async Engine
+# Create Async Engine with NullPool to avoid pgbouncer conflicts
+# and disable prepared statement caching
 engine = create_async_engine(
     SQLALCHEMY_DATABASE_URL,
     echo=False,
     future=True,
+    poolclass=NullPool,
     connect_args={
         "statement_cache_size": 0,
         "prepared_statement_cache_size": 0,
@@ -43,3 +46,4 @@ async def get_db():
             yield session
         finally:
             await session.close()
+
