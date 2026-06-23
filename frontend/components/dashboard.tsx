@@ -18,7 +18,7 @@ const Map = dynamic(() => import("./map"), {
   ),
 });
 
-const API_BASE = "https://backend-production-69b89.up.railway.app"}/api/v1`;
+const API_BASE = (process.env.NEXT_PUBLIC_API_URL || "https://backend-production-69b89.up.railway.app") + "/api/v1";
 
 export function Dashboard() {
   const { user } = useAuth();
@@ -42,7 +42,7 @@ export function Dashboard() {
     const newLog = {
       id: Date.now() + Math.random(),
       time: new Date().toLocaleTimeString(),
-      layer: `L${ layer } `,
+      layer: `L${layer} `,
       concept,
       details
     };
@@ -55,13 +55,13 @@ export function Dashboard() {
   // Fetch logic
   const fetchTab = useCallback(async (tabId: TransitTab) => {
     if (tabId === "logs") return;
-    
+
     // --- Educational Logic: Active Simulation Effects ---
     if (selectedTopicId === "5.4") {
       // Pedagogy: Simulate Propagation & Transmission Delay
       await new Promise(r => setTimeout(r, 1200));
     }
-    
+
     if (selectedTopicId === "2.17") {
       // Pedagogy: Simulate CSMA/CD Collision & Backoff
       addLog(2, "CSMA/CD", "Collision Detected! Entering Exponential Backoff...");
@@ -69,7 +69,7 @@ export function Dashboard() {
       addLog(2, "BACKOFF", "Backoff timer expired. Re-attempting transmission...");
     }
 
-    addLog(7, "API_REQ", `Fetching ${ tabId } list from distributed cluster...`);
+    addLog(7, "API_REQ", `Fetching ${tabId} list from distributed cluster...`);
     addLog(6, "SERIALIZE", "JSON PDU created for GET request");
     addLog(4, "TCP_CONN", "Handshake with backend:127.0.0.1:8000");
 
@@ -81,24 +81,24 @@ export function Dashboard() {
         student: "students",
         driver: "drivers"
       };
-      const endpoint = `${ API_BASE } /${pluralMap[tabId]}/`;
-      
+      const endpoint = `${API_BASE}/${pluralMap[tabId]}/`;
+
       const startTime = Date.now();
       const res = await fetch(endpoint);
       const rtt = Date.now() - startTime;
 
-      if (!res.ok) throw new Error(`HTTP error! status: ${ res.status } `);
+      if (!res.ok) throw new Error(`HTTP error! status: ${res.status} `);
       const data = await res.json();
-      
+
       // --- Educational Logs: Phase 2 (Success) ---
-      addLog(4, "TCP_ACK", `Received segments in ${ rtt } ms`);
-      addLog(6, "DESERIALIZE", `Unpacked ${ data.length } records from Presentation Layer`);
-      addLog(7, "APP_UPDATE", `UI synced with ${ tabId } state`);
+      addLog(4, "TCP_ACK", `Received segments in ${rtt} ms`);
+      addLog(6, "DESERIALIZE", `Unpacked ${data.length} records from Presentation Layer`);
+      addLog(7, "APP_UPDATE", `UI synced with ${tabId} state`);
 
       setAllData(prev => ({ ...prev, [tabId]: data }));
     } catch (err) {
-      addLog(7, "ERROR", `Network failure: ${ err instanceof Error ? err.message : 'Unknown' } `);
-      console.error(`Failed to fetch ${ tabId }: `, err);
+      addLog(7, "ERROR", `Network failure: ${err instanceof Error ? err.message : 'Unknown'} `);
+      console.error(`Failed to fetch ${tabId}: `, err);
     }
   }, [addLog]);
 
@@ -126,7 +126,7 @@ export function Dashboard() {
     }
 
     // --- Educational Logic: Saving Phase ---
-    addLog(7, "UPSERT_REQ", `Instructing node to persist ${ activeTabId } at[${ lat.toFixed(4) }, ${ lng.toFixed(4) }]`);
+    addLog(7, "UPSERT_REQ", `Instructing node to persist ${activeTabId} at[${lat.toFixed(4)}, ${lng.toFixed(4)}]`);
     addLog(6, "ENCODE", "Marshalling form data into Transfer Syntax (JSON)");
     addLog(4, "TCP_PUSH", "Streaming PDU to backend endpoint...");
 
@@ -138,9 +138,9 @@ export function Dashboard() {
         student: "students",
         driver: "drivers"
       };
-      const endpoint = `${ API_BASE } /${pluralMap[activeTabId]}/`;
+      const endpoint = `${API_BASE}/${pluralMap[activeTabId]}/`;
       const payload = { ...formData, lat, lng };
-      
+
       const startTime = Date.now();
       const res = await fetch(endpoint, {
         method: "POST",
@@ -155,19 +155,19 @@ export function Dashboard() {
       }
 
       const result = await res.json();
-      
+
       // --- Educational Logs: Ack ---
-      addLog(4, "TCP_ACK", `Response received(Round Trip Time: ${ rtt }ms)`);
-      addLog(7, "SYNC_OK", `Global state consistency maintained for ${ activeTabId }`);
+      addLog(4, "TCP_ACK", `Response received(Round Trip Time: ${rtt}ms)`);
+      addLog(7, "SYNC_OK", `Global state consistency maintained for ${activeTabId}`);
 
       // Cleanup
       setIsPickingLocation(false);
-      setFormData({}); 
+      setFormData({});
       fetchTab(activeTabId);
     } catch (error: any) {
-      addLog(7, "FAULT", `Data flow interrupted: ${ error.message } `);
+      addLog(7, "FAULT", `Data flow interrupted: ${error.message} `);
       console.error("Failed to save:", error);
-      alert(`Database Error: ${ error.message } `);
+      alert(`Database Error: ${error.message} `);
     }
   }, [activeTabId, formData, fetchTab, addLog]);
 
@@ -195,7 +195,7 @@ export function Dashboard() {
             </span>
           </div>
         </div>
-        
+
         <button
           onClick={() => void handleSignOut()}
           className="inline-flex h-9 items-center justify-center rounded-full border border-zinc-200 bg-white px-5 text-xs font-bold text-zinc-700 transition-all hover:bg-zinc-50 active:scale-95"
@@ -206,9 +206,9 @@ export function Dashboard() {
 
       {/* Main Content Area */}
       <div className="flex flex-1 overflow-hidden">
-        <LeftSidebar 
-          isPicking={isPickingLocation} 
-          setIsPicking={setIsPickingLocation} 
+        <LeftSidebar
+          isPicking={isPickingLocation}
+          setIsPicking={setIsPickingLocation}
           formData={formData}
           setFormData={setFormData}
           activeTabId={activeTabId}
@@ -218,24 +218,24 @@ export function Dashboard() {
 
         <main className="flex-1 relative bg-zinc-100 overflow-hidden flex">
           <div className="flex-1 relative">
-            <Map 
+            <Map
               activeTabId={activeTabId}
               allData={allData}
-              isPicking={isPickingLocation} 
+              isPicking={isPickingLocation}
               onPick={handleAutoSave}
             />
           </div>
-          
+
           {activeTabId === "logs" && (
-            <SyllabusNavigator 
+            <SyllabusNavigator
               selectedTopicId={selectedTopicId}
               onSelectTopic={setSelectedTopicId}
             />
           )}
 
-          <EncapsulationWidget 
-            isVisible={activeTabId === "logs"} 
-            activeTopicId={selectedTopicId} 
+          <EncapsulationWidget
+            isVisible={activeTabId === "logs"}
+            activeTopicId={selectedTopicId}
           />
         </main>
       </div>
