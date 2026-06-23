@@ -18,7 +18,7 @@ const Map = dynamic(() => import("./map"), {
   ),
 });
 
-const API_BASE = "https://backend-production-69b89.up.railway.app"}/api/v1`;
+const API_BASE = `https://backend-production-69b89.up.railway.app/api/v1`;
 
 export function Dashboard() {
   const { user } = useAuth();
